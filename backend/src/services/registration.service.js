@@ -121,13 +121,25 @@ async function cancelRegistration(eventId, userId) {
     .fetchAll();
 
   if (existing.length === 0) {
-    throw new ServiceError('REGISTRATION_NOT_FOUND', 'No registration found for this event.', 404);
+    throw new ServiceError(
+      'REGISTRATION_NOT_FOUND',
+      'No registration found for this event.',
+      404
+    );
   }
 
-  const registration = existing[0];
+  // Prefer the active registration because a user may have older
+  // CANCELLED registrations after re-registering.
+  const registration = existing.find(
+    (reg) => reg.status === 'REGISTERED'
+  );
 
-  if (registration.status === 'CANCELLED') {
-    throw new ServiceError('ALREADY_CANCELLED', 'Registration is already cancelled.', 400);
+  if (!registration) {
+    throw new ServiceError(
+      'ALREADY_CANCELLED',
+      'Registration is already cancelled.',
+      400
+    );
   }
 
   if (new Date() > new Date(event.startDate)) {
