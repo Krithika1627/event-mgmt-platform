@@ -4,12 +4,14 @@ const config = require('./env');
 
 let usersContainer;
 let eventsContainer;
+let registrationsContainer;
 
 async function connectCosmos() {
   const client = new CosmosClient(config.COSMOS_CONNECTION_STRING);
   const database = client.database(config.COSMOS_DATABASE_NAME);
   usersContainer = database.container(config.COSMOS_USERS_CONTAINER);
   eventsContainer = database.container(config.COSMOS_EVENTS_CONTAINER);
+  registrationsContainer = database.container(config.COSMOS_REGISTRATIONS_CONTAINER);
 
   try {
     await database.read();
@@ -19,7 +21,7 @@ async function connectCosmos() {
     throw err;
   }
 
-  return { usersContainer, eventsContainer };
+  return { usersContainer, eventsContainer, registrationsContainer };
 }
 
 function getUsersContainer() {
@@ -36,4 +38,11 @@ function getEventsContainer() {
   return eventsContainer;
 }
 
-module.exports = { connectCosmos, getUsersContainer, getEventsContainer };
+function getRegistrationsContainer() {
+  if (!registrationsContainer) {
+    throw new Error('Cosmos DB not initialized. Call connectCosmos() first.');
+  }
+  return registrationsContainer;
+}
+
+module.exports = { connectCosmos, getUsersContainer, getEventsContainer, getRegistrationsContainer };
