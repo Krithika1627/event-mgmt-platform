@@ -1,0 +1,31 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const required = [
+  'PORT',
+  'COSMOS_CONNECTION_STRING',
+  'COSMOS_DATABASE_NAME',
+  'COSMOS_USERS_CONTAINER',
+  'COSMOS_EVENTS_CONTAINER',
+  'JWT_SECRET',
+  'JWT_EXPIRES_IN'
+];
+
+const missing = required.filter((key) => !process.env[key]);
+
+if (missing.length > 0) {
+  console.error(`Missing required environment variables: ${missing.join(', ')}`);
+  process.exit(1);
+}
+
+module.exports = {
+  PORT: parseInt(process.env.PORT, 10),
+  COSMOS_CONNECTION_STRING: process.env.COSMOS_CONNECTION_STRING,
+  COSMOS_DATABASE_NAME: process.env.COSMOS_DATABASE_NAME,
+  COSMOS_USERS_CONTAINER: process.env.COSMOS_USERS_CONTAINER,
+  COSMOS_EVENTS_CONTAINER: process.env.COSMOS_EVENTS_CONTAINER,
+  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+  NODE_ENV: process.env.NODE_ENV || 'development'
+};
