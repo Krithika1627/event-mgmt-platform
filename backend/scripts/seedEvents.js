@@ -61,7 +61,7 @@ async function seed() {
       endDate: day(31),
       registrationDeadline: day(25),
       capacity: 100,
-      materialUrls: []
+      materials: []
     },
     {
       title: 'Tech Networking Mixer',
@@ -72,7 +72,7 @@ async function seed() {
       endDate: day(14),
       registrationDeadline: day(10),
       capacity: 200,
-      materialUrls: []
+      materials: []
     },
     {
       title: 'Annual Developers Conference',
@@ -83,7 +83,7 @@ async function seed() {
       endDate: day(63),
       registrationDeadline: day(55),
       capacity: 500,
-      materialUrls: []
+      materials: []
     }
   ];
 

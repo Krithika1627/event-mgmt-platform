@@ -68,7 +68,7 @@ async function createEvent(organizerId, data) {
     capacity: parsedCapacity,
     registrationCount: 0,
     status: 'DRAFT',
-    materialUrls: [],
+    materials: [],
     createdAt: now,
     updatedAt: now
   };

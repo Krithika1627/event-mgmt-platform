@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 const { getEventsContainer, getRegistrationsContainer, getUsersContainer } = require('../config/cosmos');
 const { ServiceError } = require('./auth.service');
+const { triggerRegistrationNotification } = require('./notification.service');
+const logger = require('../utils/logger');
 
 const VALID_ATTENDANCE_STATUSES = ['PRESENT', 'ABSENT', 'NOT_MARKED'];
 
@@ -97,6 +99,12 @@ async function registerForEvent(eventId, userId, userRole) {
       500
     );
   }
+
+  // Fire-and-forget: create notification and trigger Azure Function
+  // A notification failure must never fail or roll back the registration itself.
+  triggerRegistrationNotification(userId, eventId).catch((notifErr) => {
+    logger.error('Failed to trigger registration notification:', notifErr.message);
+  });
 
   return registrationDoc;
 }

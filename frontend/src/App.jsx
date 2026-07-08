@@ -14,6 +14,7 @@ import CreateEventPage from './pages/CreateEventPage';
 import EditEventPage from './pages/EditEventPage';
 import ManageEventPage from './pages/ManageEventPage';
 import AttendeeListPage from './pages/AttendeeListPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 import './App.css';
 
 export default function App() {
@@ -88,6 +89,16 @@ export default function App() {
                 <ProtectedRoute>
                   <RoleRoute allowedRoles={['ORGANIZER']}>
                     <AttendeeListPage />
+                  </RoleRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/organizer/analytics"
+              element={
+                <ProtectedRoute>
+                  <RoleRoute allowedRoles={['ORGANIZER']}>
+                    <AnalyticsPage />
                   </RoleRoute>
                 </ProtectedRoute>
               }

@@ -37,7 +37,10 @@ export default function OrganizerDashboard() {
     <div className="page-container">
       <div className="dashboard-header">
         <h1>My Events</h1>
-        <Link to="/events/create" className="btn btn-primary">Create Event</Link>
+        <div className="dashboard-header-actions">
+          <Link to="/organizer/analytics" className="btn btn-outline">Analytics</Link>
+          <Link to="/events/create" className="btn btn-primary">Create Event</Link>
+        </div>
       </div>
       <ErrorMessage message={error} onRetry={fetchEvents} />
 

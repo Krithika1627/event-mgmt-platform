@@ -4,3 +4,5 @@ backend/node_modules/
 backend/.env
 .DS_Store
 frontend/dist/
+functions/local.settings.json
+functions/node_modules/
